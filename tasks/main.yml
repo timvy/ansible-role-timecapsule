@@ -1,10 +1,8 @@
 ---
 - name: Ensure Samba packages are installed
-  yum:
+  ansible.builtin.package:
     name:
       - samba
-      - firewalld
-      - python3-policycoreutils
     state: latest
 
 - name: Samba configuration
@@ -30,21 +28,21 @@
     group: "{{ timecapsule_username }}"
     mode: "0700"
 
-- name: Allow samba to modify files
-  sefcontext:
-    target: "{{ timecapsule_folder }}(/.*)?"
-    setype: samba_share_t
-    state: present
+# - name: Allow samba to modify files
+#   sefcontext:
+#     target: "{{ timecapsule_folder }}(/.*)?"
+#     setype: samba_share_t
+#     state: present
 
-- name: Apply SELinux contexts
-  shell: "restorecon -irv {{ timecapsule_folder }}"
+# - name: Apply SELinux contexts
+#   shell: "restorecon -irv {{ timecapsule_folder }}"
 
-- name: Ensure firewalld allows microsoft-ds
-  firewalld:
-    service: samba
-    permanent: yes
-    state: enabled
-  notify: reload firewalld
+# - name: Ensure firewalld allows microsoft-ds
+#   firewalld:
+#     service: samba
+#     permanent: yes
+#     state: enabled
+#   notify: reload firewalld
 
 - name: Ensure services are started and enabled
   service:
@@ -53,4 +51,4 @@
     enabled: true
   loop:
     - smb
-    - firewalld
+    - avahi
