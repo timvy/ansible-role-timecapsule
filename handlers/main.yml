@@ -1,10 +1,5 @@
 ---
 - name: restart samba
   service:
-    name: smb
+    name: samba
     state: restarted
-
-- name: reload firewalld
-  service:
-    name: firewalld
-    state: reloaded
