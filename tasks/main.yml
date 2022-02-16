@@ -50,5 +50,5 @@
     state: started
     enabled: true
   loop:
-    - smb
-    - avahi
+    - samba
+    - avahi-daemon
