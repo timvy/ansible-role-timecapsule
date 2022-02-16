@@ -3,6 +3,8 @@
   ansible.builtin.package:
     name:
       - samba
+      - avahi
+      - dbus
     state: latest
 
 - name: Samba configuration
@@ -51,4 +53,5 @@
     enabled: true
   loop:
     - samba
+    - dbus
     - avahi-daemon
